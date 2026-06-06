@@ -1,0 +1,109 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String            @id @default(uuid())
+  email          String            @unique
+  password       String
+  name           String
+  role           String            // ADMIN, TEACHER, GUARDIAN, STUDENT
+  schoolName     String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  
+  // Relations
+  createdLogs    InterventionLog[] @relation("LogCreator")
+  submittedVideos Video[]          @relation("VideoSubmitter")
+  
+  // Optional linkages depending on role
+  studentProfile Student?          @relation("StudentUser")
+  guardianFor    Student[]         @relation("GuardianStudents")
+  teacherFor     Student[]         @relation("TeacherStudents")
+}
+
+model Student {
+  id                  String            @id @default(uuid())
+  name                String
+  school              String
+  grade               String            // "01", "02", ..., "12"
+  tags                String            // Comma-separated list like "EL,SWD,504"
+  attendanceRate      Float             // Percentage e.g. 92.5
+  inSchoolSuspensions Int               @default(0)
+  outSchoolSuspensions Int              @default(0)
+  mapQuintile         Int               @default(3) // 1 to 5 (MAP Quintiles)
+  courseFailures      Int               @default(0) // Count of failed courses
+  courseFailuresYoY   String            // JSON or comma-separated history e.g., "0,1,0" for past years
+  gpa                 Float             @default(4.0)
+  
+  // Linkages to Auth Users
+  userId              String?           @unique
+  user                User?             @relation("StudentUser", fields: [userId], references: [id], onDelete: Cascade)
+  
+  guardianId          String?
+  guardian            User?             @relation("GuardianStudents", fields: [guardianId], references: [id])
+  
+  teacherId           String?
+  teacher             User?             @relation("TeacherStudents", fields: [teacherId], references: [id])
+  
+  // Relations
+  interventionLogs    InterventionLog[]
+  assignments         Assignment[]
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+}
+
+model InterventionLog {
+  id           String   @id @default(uuid())
+  type         String   // Math, Attendance, Reading, Behavior, Writing, Academic
+  title        String
+  description  String
+  status       String   // ACTIVE, COMPLETED
+  
+  studentId    String
+  student      Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdById  String
+  createdBy    User     @relation("LogCreator", fields: [createdById], references: [id])
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Assignment {
+  id           String    @id @default(uuid())
+  title        String
+  className    String    // Advisory, Algebra II, Biology 1, etc.
+  dueDate      DateTime
+  turnedInAt   DateTime?
+  points       Float?    // Score received, e.g. 85
+  maxPoints    Float     @default(100)
+  status       String    // COMPLETED, MISSING, UPCOMING
+  
+  studentId    String
+  student      Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Video {
+  id            String   @id @default(uuid())
+  title         String
+  url           String   // YouTube URL
+  description   String?
+  category      String   // Education, Creative Arts, School Events, Kannada Culture, Science Projects, Announcements
+  status        String   // PENDING, APPROVED, REJECTED
+  likes         Int      @default(0)
+  
+  submittedById String
+  submittedBy   User     @relation("VideoSubmitter", fields: [submittedById], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

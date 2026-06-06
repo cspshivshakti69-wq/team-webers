@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #05050f;
+  --color-card-dark: #0d0d1f;
+  --color-card-dark-hover: #12122a;
+  --color-primary-cyan: #00e5ff;
+  --color-primary-purple: #a855f7;
+  --color-accent-pink: #ec4899;
+  --color-accent-green: #22c55e;
+  --color-border-dark: rgba(255, 255, 255, 0.08);
+  --font-mono: 'Space Grotesk', 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', 'DM Sans', sans-serif;
+}
+
+:root.dark {
+  --bg-primary: #05050f;
+  --bg-secondary: #0d0d1f;
+  --bg-card: #12122a;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --border-color: rgba(255,255,255,0.08);
+  --accent-cyan: #00e5ff;
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --input-bg: #1a1a35;
+  --sidebar-bg: #0a0a1f;
+  --navbar-bg: #08081a;
+  --table-row-odd: #0f0f25;
+  --table-row-even: #12122a;
+  --chart-bg: #0d0d1f;
+  --modal-bg: #0f0f25;
+  --badge-bg: rgba(168,85,247,0.2);
+  --hover-bg: rgba(255,255,255,0.05);
+  --scrollbar-thumb: #2d2d5e;
+  --shadow: 0 4px 24px rgba(0,0,255,0.1);
+}
+
+:root.light {
+  --bg-primary: #f0f4ff;
+  --bg-secondary: #e8edf8;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: rgba(0,0,0,0.1);
+  --accent-cyan: #0891b2;
+  --accent-purple: #7c3aed;
+  --accent-pink: #db2777;
+  --input-bg: #ffffff;
+  --sidebar-bg: #f8faff;
+  --navbar-bg: #ffffff;
+  --table-row-odd: #f8faff;
+  --table-row-even: #ffffff;
+  --chart-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --badge-bg: rgba(124,58,237,0.1);
+  --hover-bg: rgba(0,0,0,0.04);
+  --scrollbar-thumb: #c7d2fe;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color-scheme: dark light;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global Overrides mapping to variables */
+body, html {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+header, nav, .bg-\[\#05050f\]\/90, .bg-\[\#05050f\]\/80 {
+  background-color: var(--navbar-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+aside, .bg-\[\#0a0a1f\], .bg-\[\#05050f\] {
+  background-color: var(--sidebar-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+.glow-card, .bg-\[\#0d0d1f\], .bg-\[\#12122a\], .bg-\[\#0d0d1f\]\/40, .bg-white\/5, .bg-white\/\[0\.02\] {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Text elements */
+.text-white, h1, h2, h3, h4, h5, h6, .text-slate-200 {
+  color: var(--text-primary) !important;
+}
+
+.text-slate-400, .text-slate-500, .text-slate-300, .text-gray-500, .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+/* Tables styling */
+table {
+  color: var(--text-primary) !important;
+}
+thead tr {
+  background-color: var(--table-row-odd) !important;
+}
+tbody tr {
+  border-color: var(--border-color) !important;
+}
+tbody tr:nth-child(odd) {
+  background-color: var(--table-row-odd) !important;
+}
+tbody tr:nth-child(even) {
+  background-color: var(--table-row-even) !important;
+}
+th, td {
+  border-color: var(--border-color) !important;
+}
+td {
+  color: var(--text-secondary) !important;
+}
+
+/* Modals */
+.fixed.inset-0.bg-black\/60, .fixed.inset-0.bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+.fixed.inset-0 + div, .max-w-3xl, .max-w-md, .max-w-2xl, .bg-\[\#0d0d1f\] {
+  background-color: var(--modal-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Forms & Inputs */
+input, select, textarea {
+  background-color: var(--input-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.5;
+}
+
+/* Buttons border overrides */
+button:not(.btn-gradient):not(.bg-cyan-500):not(.bg-purple-600):not(.bg-emerald-600) {
+  border-color: var(--border-color) !important;
+}
+button:hover:not(.btn-gradient):not(.bg-cyan-500):not(.bg-purple-600):not(.bg-emerald-600) {
+  background-color: var(--hover-bg) !important;
+}
+
+/* Badges & Pills */
+.bg-cyan-500\/10, .bg-purple-500\/10, .bg-white\/5, .bg-emerald-950\/20, .bg-red-950\/20 {
+  background-color: var(--badge-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Webkit scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary) !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary) !important;
+}
+
+/* Chatbot widget overrides */
+.glass-morphism, .chat-widget-panel {
+  background-color: var(--modal-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Border global hooks */
+.border-white\/5, .border-white\/10, .border-gray-800, .border-gray-200 {
+  border-color: var(--border-color) !important;
+}
+
+/* Glow effects and animation utilities */
+.glow-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-card:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15), 0 0 40px rgba(168, 85, 247, 0.05);
+  transform: translateY(-2px);
+}
+
+.glow-card-purple:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+  transform: translateY(-2px);
+}
+
+.glow-card-pink:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+  transform: translateY(-2px);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #00e5ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00e5ff, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #a855f7, #06b6d4);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.95;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+  transform: scale(1.02);
+}
+
+.btn-gradient:active {
+  transform: scale(0.98);
+}
+
+@keyframes pulse-cyan {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 229, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+  }
+}
+
+.pulse-border-cyan {
+  animation: pulse-cyan 2s infinite;
+}
+
+.glass-morphism {
+  background: rgba(13, 13, 31, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Date of Birth Picker Styles */
+.dob-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.dob-wrapper label {
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.dob-selects {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.dob-selects select {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: auto;
+  transition: border-color 0.2s ease;
+}
+
+.dob-selects select:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+}
+
+.dob-selects select option {
+  background: var(--input-bg);
+  color: var(--text-primary);
+}
+
+.field-error {
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: 2px;
+}
+
+.age-display {
+  font-size: 11px;
+  color: var(--accent-cyan);
+  margin-top: 2px;
+}
